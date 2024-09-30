@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'admin_notulensi',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +131,20 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'static'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+
+MEDIA_ROOT = BASE_DIR / 'berkas'
+MEDIA_URL = 'http://cdn.ar-raniry.ac.id/notulensi-testing/'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.sftpstorage.SFTPStorage'
+
+SFTP_STORAGE_HOST = '192.168.176.227'
+SFTP_STORAGE_ROOT = '/home/sertsftp/data/notulensi-testing'
+SFTP_STORAGE_PARAMS = {'username': 'sertsftp',     
+                       'password': 's1f2t3p1',
+                       'allow_agent': False,
+                       'look_for_keys': False, }
+SFTP_STORAGE_INTERACTIVE = False
