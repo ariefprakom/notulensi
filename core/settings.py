@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-wc%(b&f$guu@e51g^#$%(q1qocyx-yrk&d+vqptj*hc_g)6xga
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['arief.local']
 
 
 # Application definition
@@ -39,6 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'admin_notulensi',
+
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.openid_connect',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -149,3 +156,34 @@ SFTP_STORAGE_PARAMS = {'username': 'sertsftp',
                        'allow_agent': False,
                        'look_for_keys': False, }
 SFTP_STORAGE_INTERACTIVE = False
+
+AUTHENTICATION_BACKENDS = [
+    
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+    
+]
+
+SITE_ID = 2
+# ACCOUNT_EMAIL_REQUIRED =False
+SOCIALACCOUNT_EMAIL_VERIFICATION = False
+LOGIN_REDIRECT_URL = "/laman-admin"
+
+ACCOUNT_LOGOUT_REDIRECT_URL = "https://keycloaktest.ar-raniry.ac.id/auth/realms/uinar/protocol/openid-connect/logout?redirect_uri=http://arief.local:8000/"
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    "openid_connect": {
+        "APPS": [
+            {
+                "provider_id": "keycloak",
+                "name": "Keycloak",
+                "client_id": "notulen",
+                "secret": "",
+                "settings": {
+                    "server_url": "https://keycloaktest.ar-raniry.ac.id/auth/realms/uinar",
+                },
+            }
+        ]
+    }
+}
