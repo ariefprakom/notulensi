@@ -1,0 +1,92 @@
+{% extends "admin_notulensi/base.html" %}
+
+{% block namaTab %}Beranda{% endblock namaTab %}
+
+{% block sideBar %}
+
+    <a class="nav-link" href="{% url "home" %}"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Beranda</a>
+    <a class="nav-link" href="{% url "homeKonfigurasi" %}"><div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>Konfigurasi</a>
+    
+{% endblock sideBar %}
+
+{% block contentApp_hello %}
+
+    <h5 class="mt-4">Selamat datang, {{profilPeg.nama}} </h5>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">[role : Sekretaris]</li>
+    </ol>
+    
+{% endblock contentApp_hello %}
+
+{% block contentApp_utama %}
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Tambah Peserta Rapat
+        </div>
+        <div class="card-body">
+            <div class="col-md-8">
+                <form id="search-form" autocomplete="off">
+                    {% csrf_token %}
+                    <input type="text" id="search-input" class="p-1 w-100 search" placeholder="Masukkan nama pegawai...">
+                  </form>
+                  <div id="results-box" class="results-card not-visible"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const url = window.location.href
+        const searchForm = document.getElementById('search-form')
+        const searchInput = document.getElementById('search-input')
+        const resultsBox = document.getElementById('results-box')
+        const csrf = document.getElementsByName('csrfmiddlewaretoken')[0].value
+        
+        const sendSearchData = (nama) => {
+          $.ajax({
+              type: 'POST',
+              url: 'listpeg/',
+              data: {
+                  'csrfmiddlewaretoken': csrf,
+                  'nama': nama,
+              },
+              success: (res)=> {
+                  
+                  const data = res.data
+                  if(Array.isArray(data)) {
+                    resultsBox.innerHTML = ""                      
+                    data.forEach(nama=> {
+                        resultsBox.innerHTML += `
+                                <div class="row mt-2 mb-2">
+                                    <div> ${nama.nama} -- NIP : ${nama.id} </div>
+                                </div>
+                        `
+                    })
+                  } else {
+                    if (searchInput.value.length >= 0) {
+                        resultsBox.innerHTML = `${data}`
+                    } else {
+                        resultsBox.classList.add('not-visible')
+                    }
+                  }
+              },
+              error: (err)=> {
+                  console.log(err)
+              }
+          })
+        }
+      
+      
+        searchInput.addEventListener('keyup', e=>{
+          
+          if (resultsBox.classList.contains('not-visible')){
+              resultsBox.classList.remove('not-visible')
+          }
+      
+          sendSearchData(e.target.value)
+        })
+        
+    </script>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+{% endblock contentApp_utama %}

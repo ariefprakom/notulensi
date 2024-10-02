@@ -1,0 +1,22 @@
+{% extends "admin_notulensi/base.html" %}
+
+{% block namaTab %}Konfigurasi{% endblock namaTab %}
+
+{% block sideBar %}
+
+<a class="nav-link" href="{% url "home" %}"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Beranda</a>
+<a class="nav-link" href="{% url "homeKonfigurasi" %}"><div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>Konfigurasi</a>
+
+{% endblock sideBar %}
+
+{% block contentApp_utama %}
+    <div class="card mb-4 mt-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Cari Pegawai Aktif UIN Ar-Raniry Banda Aceh
+        </div>
+        <div class="card-body">
+            Setting Agenda Rapat
+        </div>
+    </div>
+{% endblock contentApp_utama %}

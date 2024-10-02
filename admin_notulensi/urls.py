@@ -4,5 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', views.homeAdmin, name='home'),  
+    path('', views.home, name='home'),  
+    path('listpeg/', views.homeListPeg, name='homeListPeg'),  
+    path('konfigurasi/', views.homeKonfigurasi, name='homeKonfigurasi'),  
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

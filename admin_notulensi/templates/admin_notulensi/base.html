@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Beranda - Aplikasi Notulensi Rapat</title>
+        <title>{% block namaTab %}{% endblock namaTab %}</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href={% static "assets/css/styles.css" %} rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -26,10 +26,7 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             {% comment %} <div class="sb-sidenav-menu-heading">Core</div> {% endcomment %}
-                            <a class="nav-link" href="{% url "home" %}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Beranda
-                            </a>
+                            {% block sideBar %}{% endblock sideBar %}
                             {% comment %} <div class="sb-sidenav-menu-heading">Interface</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -103,19 +100,8 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h2 class="mt-4">Selamat datang, {{user_login.first_name}} {{user_login.last_name}} </h2>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">[diisi dengan rule user yg login]</li>
-                        </ol>
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                Pengaturan Aplikasi
-                            </div>
-                            <div class="card-body">
-                                Disini Pengaturan ...
-                            </div>
-                        </div>
+                        {% block contentApp_hello %}{% endblock contentApp_hello %}
+                        {% block contentApp_utama %}{% endblock contentApp_utama %}
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
