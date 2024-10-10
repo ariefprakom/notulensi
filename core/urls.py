@@ -6,6 +6,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.loginSSO, name='loginSSO'), 
     path('agenda/', include('agendarapat.urls')),
-    path('beranda/', include('admin_notulensi.urls')),
+    path('admin-app/', include('admin_notulensi.urls')),
     path('accounts/', include('allauth.urls')),
 ]

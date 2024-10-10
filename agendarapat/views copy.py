@@ -4,10 +4,8 @@ from .models import AgendaRapat, PesertaRapat
 from .forms import AgendaRapatForm, NotulenRapatForm
 from admin_notulensi import konstanta
 from django.urls import reverse
-from django.contrib.auth.decorators import login_required
 import requests
 
-@login_required(login_url='/accounts/oidc/keycloak/login/?process=login')
 def create_agenda(request):
     if request.method == 'POST':
         form = AgendaRapatForm(request.POST)
