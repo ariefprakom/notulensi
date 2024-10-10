@@ -11,7 +11,7 @@
 
 {% block contentApp_hello %}
 
-    <h5 class="mt-4">Selamat datang, {{profilPeg.nama}} </h5>
+    <h5 class="mt-4">Selamat datang, {{profilPeg.nama}}</h5>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active">[role : Sekretaris]</li>
     </ol>
@@ -58,7 +58,7 @@
                     data.forEach(nama=> {
                         resultsBox.innerHTML += `
                                 <div class="row mt-2 mb-2">
-                                    <div> ${nama.nama} -- NIP : ${nama.id} </div>
+                                    <div> ${nama.nama} <p>NIP : ${nama.id} </p></div>
                                 </div>
                         `
                     })
@@ -68,7 +68,7 @@
                     } else {
                         resultsBox.classList.add('not-visible')
                     }
-                  }
+                  } console.log(data)
               },
               error: (err)=> {
                   console.log(err)

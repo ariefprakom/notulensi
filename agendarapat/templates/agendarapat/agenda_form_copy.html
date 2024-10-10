@@ -1,0 +1,49 @@
+<form method="post" id="agenda-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    
+    <label for="peserta">Peserta Rapat</label>
+    <select id="peserta" name="peserta[]" multiple></select> <!-- Sesuaikan name menjadi peserta[] untuk array -->
+
+    <button type="submit">Submit</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $.ajax({
+            url: '{% url "fetch_employees" %}',
+            method: 'GET',
+            success: function(data) {
+                $('#peserta').empty();
+                $.each(data.employees, function(index, employee) {
+                    $('#peserta').append('<option value="' + employee.nama + '">' + employee.nama + '</option>');  // value = nama pegawai
+                });
+            }
+        });
+
+        // Pastikan form dikirim dengan peserta
+        $('#agenda-form').submit(function(event) {
+            event.preventDefault();
+
+            var formData = $(this).serialize();
+
+            $.ajax({
+                url: '{% url "create_agenda" %}',  // Pastikan ini benar
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    if (response.redirect_url) {
+                        // Redirect ke URL detail_agenda dengan pk yang benar
+                        window.location.href = response.redirect_url;
+                    } else {
+                        alert('Error: URL undefined');
+                    }
+                },
+                error: function(response) {
+                    alert('Gagal mengirim form.');
+                }
+            });
+        });
+    });
+</script>

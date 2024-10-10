@@ -1,0 +1,6 @@
+<h2>Notulen Rapat: {{ agenda.judul }}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Simpan Notulen</button>
+</form>

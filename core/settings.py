@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'admin_notulensi',
+    'agendarapat',
+
+    'crispy_forms',
+    'crispy_bootstrap5',
 
     'django.contrib.sites',
     'allauth',
@@ -115,7 +119,9 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -187,3 +193,4 @@ SOCIALACCOUNT_PROVIDERS = {
         ]
     }
 }
+
