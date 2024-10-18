@@ -25,8 +25,9 @@ SECRET_KEY = 'django-insecure-wc%(b&f$guu@e51g^#$%(q1qocyx-yrk&d+vqptj*hc_g)6xga
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['arief.local']
+ALLOWED_HOSTS = ['arief.local','192.168.168.136']
 
+#mau showcase, runserver dgn IP di atas, set IP di atas di keycloaktest biar bisa SSO
 
 # Application definition
 
