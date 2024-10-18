@@ -93,12 +93,20 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'notulensi', 
+        'NAME': 'test_notulensi', 
         'USER': 'root', 
-        'PASSWORD': 'admin', 
-        'HOST': 'kubernetes.docker.internal', 
+        'PASSWORD': 'uinpwd', 
+        'HOST': '192.168.176.202', 
         'PORT': '3307', 
     },
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'notulensi', 
+    #     'USER': 'root', 
+    #     'PASSWORD': 'admin', 
+    #     'HOST': 'kubernetes.docker.internal', 
+    #     'PORT': '3307', 
+    # },
 }
 
 
