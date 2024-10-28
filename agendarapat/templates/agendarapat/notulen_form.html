@@ -1,6 +1,47 @@
-<h2>Notulen Rapat: {{ agenda.judul }}</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Simpan Notulen</button>
-</form>
+{% extends "admin_notulensi/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block namaTab %}Beranda{% endblock namaTab %}
+
+{% block sideBar %}
+    {% comment %} Agenda Rapat {% endcomment %}
+        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                Agenda Rapat
+            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+        </a>
+        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+            <nav class="sb-sidenav-menu-nested nav">
+                <a class="nav-link" href="{% url "create_agenda" %}">Buat Agenda</a>
+                <a class="nav-link" href="{% url "list_agenda" %}">Daftar Agenda</a>
+            </nav>
+        </div>
+    
+{% endblock sideBar %}
+
+{% block contentApp_hello %}
+
+    
+    
+{% endblock contentApp_hello %}
+
+{% block contentApp_utama %}
+<link rel="stylesheet" href={% static "assets/css/multi-select-tag.css" %}>
+<div class="card mb-4 mt-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        Notulensi Rapat : {{agenda}}
+    </div>
+    <div class="card-body">
+        <div class="col-md-12">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn btn-primary" type="submit">Simpan Notulen</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock contentApp_utama %}
