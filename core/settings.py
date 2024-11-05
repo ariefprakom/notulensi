@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-wc%(b&f$guu@e51g^#$%(q1qocyx-yrk&d+vqptj*hc_g)6xga
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['arief.local','192.168.168.136']
+ALLOWED_HOSTS = ['arief.local','192.168.168.143']
 
 #mau showcase, runserver dgn IP di atas, set IP di atas di keycloaktest biar bisa SSO
 
@@ -184,6 +184,7 @@ SITE_ID = 2
 SOCIALACCOUNT_EMAIL_VERIFICATION = False
 LOGIN_REDIRECT_URL = "/agenda"
 
+# ACCOUNT_LOGOUT_REDIRECT_URL = "https://keycloaktest.ar-raniry.ac.id/auth/realms/uinar/protocol/openid-connect/logout?redirect_uri=http://192.168.168.143:8000/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "https://keycloaktest.ar-raniry.ac.id/auth/realms/uinar/protocol/openid-connect/logout?redirect_uri=http://arief.local:8000/"
 
 
