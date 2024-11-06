@@ -182,7 +182,7 @@ AUTHENTICATION_BACKENDS = [
 SITE_ID = 2
 # ACCOUNT_EMAIL_REQUIRED =False
 SOCIALACCOUNT_EMAIL_VERIFICATION = False
-LOGIN_REDIRECT_URL = "/agenda"
+LOGIN_REDIRECT_URL = "/agenda/list"
 
 # ACCOUNT_LOGOUT_REDIRECT_URL = "https://keycloaktest.ar-raniry.ac.id/auth/realms/uinar/protocol/openid-connect/logout?redirect_uri=http://192.168.168.143:8000/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "https://keycloaktest.ar-raniry.ac.id/auth/realms/uinar/protocol/openid-connect/logout?redirect_uri=http://arief.local:8000/"

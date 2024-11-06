@@ -28,7 +28,9 @@ def create_agenda(request):
     else:
         form = AgendaRapatForm()
     return render(request, 'agendarapat/agenda_form.html', {'form': form})
+    # return render(request, 'agendarapat/agenda_form.html', {'form': form})
 
+@login_required(login_url='/accounts/oidc/keycloak/login/?process=login')
 def fetch_employees(request):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':  
         payload = "{\"query\":\"query DaftarPegawai(\\n  $skip: Int\\n  $take: Int\\n  $orderBy: PegawaiOrderByInput\\n  $filter: PegawaiFilterInput\\n) {\\n  daftarPegawai(skip: $skip, take: $take, orderBy: $orderBy, filter: $filter) {\\n    count\\n     pegawai {\\n      id\\n      nama\\n      statusPegawai {\\n        nama\\n      }\\n      unitKerjaSaatIni {\\n        unitKerja {\\n\\t\\t\\t\\t\\tid\\n          nama\\n        }\\n        posisi {\\n\\t\\t\\t\\t\\tid\\n          nama\\n        }\\n        bagian {\\n\\t\\t\\t\\t\\tid\\n          nama\\n        }\\n\\t\\t\\t\\tsubbag {\\n          id\\n          nama\\n        }\\n      }\\n    }\\n  }\\n}\",\"operationName\":\"DaftarPegawai\",\"variables\":{\"filter\":{\"daftarStatusAktifId\":[1]}}}"   
@@ -38,6 +40,7 @@ def fetch_employees(request):
     else:
         return JsonResponse({'error': 'Invalid request'}, status=400)
 
+@login_required(login_url='/accounts/oidc/keycloak/login/?process=login')
 def create_notulen(request, pk):
     agenda = get_object_or_404(AgendaRapat, pk=pk)
     if request.method == 'POST':
@@ -51,11 +54,13 @@ def create_notulen(request, pk):
         form = NotulenRapatForm()
     return render(request, 'agendarapat/notulen_form.html', {'form': form, 'agenda': agenda})
 
+@login_required(login_url='/accounts/oidc/keycloak/login/?process=login')
 def detail_agenda(request, pk):
     agenda = get_object_or_404(AgendaRapat, pk=pk)
     peserta_rapat = agenda.peserta.all()
     return render(request, 'agendarapat/agenda_detail.html', {'agenda': agenda,'peserta_rapat': peserta_rapat})
 
+@login_required(login_url='/accounts/oidc/keycloak/login/?process=login')
 def list_agenda(request):
     agenda = AgendaRapat.objects.all()
     return render(request, 'agendarapat/list_agenda.html', {'agenda': agenda})

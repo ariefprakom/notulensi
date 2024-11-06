@@ -1,45 +1,62 @@
-{% extends "admin_notulensi/base.html" %}
-{% load static %}
+{% extends "agendarapat/base.html" %}
 {% load crispy_forms_tags %}
 
-{% block namaTab %}Beranda{% endblock namaTab %}
+{% block tabTitle %} Daftar Agenda {% endblock tabTitle %}
 
-{% block sideBar %}
-    {% comment %} Agenda Rapat {% endcomment %}
-        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                Agenda Rapat
-            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-        </a>
-        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-            <nav class="sb-sidenav-menu-nested nav">
-                <a class="nav-link" href="{% url "create_agenda" %}">Buat Agenda</a>
-                <a class="nav-link" href="{% url "list_agenda" %}">Daftar Agenda</a>
-            </nav>
+{% block kontenKiri %}
+  <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
+      <div class="card">
+        
+        <div class="card-header pb-0">
+          <div class="row">
+            {% comment %} Isi Konten Kanan Disini {% endcomment %}
+            <div class="col-lg-12 col-12">
+                <h4>Daftar Agenda Rapat</h4>
+            </div>
+          </div>
         </div>
-    
-{% endblock sideBar %}
 
-{% block contentApp_hello %}
-
-    
-    
-{% endblock contentApp_hello %}
-
-{% block contentApp_utama %}
-<link rel="stylesheet" href={% static "assets/css/multi-select-tag.css" %}>
-<div class="card mb-4 mt-4">
-    <div class="card-header">
-        <i class="fas fa-table me-1"></i>
-        Daftar Agenda Rapat
-    </div>
-    <div class="card-body">
-        <div class="col-md-12">
-            {% for val in agenda %}
-                <p><a href="{% url 'detail_agenda' val.pk %}">{{val}}</a></p>
-            {% endfor %}
+        <div class="card-body px-0 pb-2">
+          <div class="table-responsive">
+            <table class="table align-items-center mb-0">
+              <thead>
+                <tr>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Judul</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Lokasi</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jadwal</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for val in agenda %}
+                <tr>
+                  <td>
+                    <div class="d-flex px-2 py-1">
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="mb-0 text-sm">{{val.judul}}</h6>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="avatar-group mt-2">
+                      {{val.lokasi}}
+                    </div>
+                  </td>
+                  <td class="align-middle text-center text-sm">
+                    <span class="text-xs font-weight-bold"> {{val.tanggal}} </span>
+                  </td>
+                  <td class="align-middle text-center">
+                    <div class="progress-wrapper w-75 mx-auto">
+                      <a class="btn btn-outline-primary btn-sm mb-0 me-3" href="{% url 'detail_agenda' val.pk %}">Detil</a>
+                    </div>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
-    </div>
-</div>
 
-{% endblock contentApp_utama %}
+      </div>
+  </div>
+{% endblock kontenKiri %}

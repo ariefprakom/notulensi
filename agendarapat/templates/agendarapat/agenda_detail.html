@@ -1,57 +1,41 @@
-{% extends "admin_notulensi/base.html" %}
-{% load static %}
+{% extends "agendarapat/base.html" %}
 {% load crispy_forms_tags %}
 
-{% block namaTab %}Beranda{% endblock namaTab %}
+{% block tabTitle %} Detil Agenda {% endblock tabTitle %}
 
-{% block sideBar %}
-    {% comment %} Agenda Rapat {% endcomment %}
-        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                Agenda Rapat
-            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-        </a>
-        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-            <nav class="sb-sidenav-menu-nested nav">
-                <a class="nav-link" href="{% url "create_agenda" %}">Buat Agenda</a>
-                <a class="nav-link" href="{% url "list_agenda" %}">Daftar Agenda</a>
-            </nav>
+{% block kontenKiri %}
+  <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
+      <div class="card">
+        
+        <div class="card-header pb-0">
+          <div class="row">
+            {% comment %} Isi Konten Kanan Disini {% endcomment %}
+            <div class="col-lg-12 col-12">
+              <h4>{{ agenda.judul }}</h4>
+              <hr class="horizontal dark mt-0">
+              <p>Tanggal: {{ agenda.tanggal }}</p>
+              <p>Lokasi: {{ agenda.lokasi }}</p>
+              <h6>Peserta Rapat:</h6>
+              <ul>
+                  {% if peserta_rapat %}
+                      {% for peserta in peserta_rapat %}
+                          <li>{{ peserta.nama_pegawai }}</li>
+                      {% endfor %}
+                  {% else %}
+                      <p>Tidak ada peserta terdaftar.</p>
+                  {% endif %}
+              </ul>
+              <hr class="horizontal dark mt-0">
+
+              <a class="btn btn-outline-primary btn-sm mb-0 me-3" href="{% url 'create_notulen' agenda.pk %}">Buat Notulen</a>
+
+            </div>
+          </div>
         </div>
-{% endblock sideBar %}
 
-{% block contentApp_hello %}
-
-    
-    
-{% endblock contentApp_hello %}
-
-{% block contentApp_utama %}
-<link rel="stylesheet" href={% static "assets/css/multi-select-tag.css" %}>
-<div class="card mb-4 mt-4">
-    <div class="card-header">
-        <i class="fas fa-table me-1"></i>
-        Detil Agenda Rapat
-    </div>
-    <div class="card-body">
-        <div class="col-md-12">
-            <h1>{{ agenda.judul }}</h1>
-            <p>Tanggal: {{ agenda.tanggal }}</p>
-            <p>Lokasi: {{ agenda.lokasi }}</p>
-
-            <h3>Peserta Rapat:</h3>
-            <ul>
-                {% if peserta_rapat %}
-                    {% for peserta in peserta_rapat %}
-                        <li>{{ peserta.nama_pegawai }}</li>
-                    {% endfor %}
-                {% else %}
-                    <p>Tidak ada peserta terdaftar.</p>
-                {% endif %}
-            </ul>
-
-    <a href="{% url 'create_notulen' agenda.pk %}">Buat Notulen</a>
+        <div class="card-body px-0 pb-2">
         </div>
-    </div>
-</div>
 
-{% endblock contentApp_utama %}
+      </div>
+  </div>
+{% endblock kontenKiri %}

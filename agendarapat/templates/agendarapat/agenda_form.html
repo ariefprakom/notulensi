@@ -1,41 +1,20 @@
-{% extends "admin_notulensi/base.html" %}
-{% load static %}
+{% extends "agendarapat/base.html" %}
 {% load crispy_forms_tags %}
 
-{% block namaTab %}Beranda{% endblock namaTab %}
+{% block tabTitle %} Buat Agenda {% endblock tabTitle %}
 
-{% block sideBar %}
-   {% comment %} Agenda Rapat {% endcomment %}
-        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                Agenda Rapat
-            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-        </a>
-        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-            <nav class="sb-sidenav-menu-nested nav">
-                <a class="nav-link" href="{% url "create_agenda" %}">Buat Agenda</a>
-                <a class="nav-link" href="{% url "list_agenda" %}">Daftar Agenda</a>
-            </nav>
-        </div>
-    
-{% endblock sideBar %}
+{% block kontenKiri %}
 
-{% block contentApp_hello %}
-
-    
-    
-{% endblock contentApp_hello %}
-
-{% block contentApp_utama %}
-<link rel="stylesheet" href={% static "assets/css/multi-select-tag.css" %}>
-<div class="card mb-4 mt-4">
-    <div class="card-header">
-        <i class="fas fa-table me-1"></i>
-        Buat Agenda Rapat
-    </div>
-    <div class="card-body">
-        <div class="col-md-12">
-            <form method="post" id="agenda-form">
+  <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
+    <div class="card">
+      
+      <div class="card-header pb-0">
+        <div class="row">
+          {% comment %} Isi Konten Kanan Disini {% endcomment %}
+          <div class="col-lg-12 col-12">
+            <h6>Buat Agenda Rapat</h6>
+            <p class="text-sm mb-0">
+              <form method="post" id="agenda-form">
                 {% csrf_token %}
                 {{ form |crispy }}
                 
@@ -43,53 +22,72 @@
                 <select id="peserta" name="peserta[]" multiple></select> <!-- Sesuaikan name menjadi peserta[] untuk array -->
                 <hr>
                 <button class="btn btn-primary" type="submit">Simpan</button>
-            </form>
+              </form>
+            </p>
+          </div>
         </div>
+      </div>
+
+      <div class="card-body px-0 pb-2">
+      </div>
+
     </div>
-</div>
+  </div>
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript">
+      $(document).ready(function() {
+          $.ajax({
+              url: '{% url "fetch_employees" %}',
+              method: 'GET',
+              success: function(data) {
+                  $('#peserta').empty();
+                  $.each(data.employees, function(index, employee) {
+                      $('#peserta').append('<option value="' + employee.nama + '">' + employee.nama + '</option>');  // value = nama pegawai
+                  });
+                  new MultiSelectTag('peserta');
+              }
+          });
 
+          // Pastikan form dikirim dengan peserta
+          $('#agenda-form').submit(function(event) {
+              event.preventDefault();
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $.ajax({
-            url: '{% url "fetch_employees" %}',
-            method: 'GET',
-            success: function(data) {
-                $('#peserta').empty();
-                $.each(data.employees, function(index, employee) {
-                    $('#peserta').append('<option value="' + employee.nama + '">' + employee.nama + '</option>');  // value = nama pegawai
-                });
-                new MultiSelectTag('peserta');
-            }
-        });
+              var formData = $(this).serialize();
 
-        // Pastikan form dikirim dengan peserta
-        $('#agenda-form').submit(function(event) {
-            event.preventDefault();
+              $.ajax({
+                  url: '{% url "create_agenda" %}',  // Pastikan ini benar
+                  method: 'POST',
+                  data: formData,
+                  success: function(response) {
+                      if (response.redirect_url) {
+                          // Redirect ke URL detail_agenda dengan pk yang benar
+                          window.location.href = response.redirect_url;
+                      } else {
+                          alert('Error: Format tanggal yang dimasukkan salah!');
+                      }
+                  },
+                  error: function(response) {
+                      alert('Gagal mengirim form.');
+                  }
+              });
+          });
+      });
+  </script>
 
-            var formData = $(this).serialize();
+{% endblock kontenKiri %}
 
-            $.ajax({
-                url: '{% url "create_agenda" %}',  // Pastikan ini benar
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    if (response.redirect_url) {
-                        // Redirect ke URL detail_agenda dengan pk yang benar
-                        window.location.href = response.redirect_url;
-                    } else {
-                        alert('Error: Format tanggal yang dimasukkan salah!');
-                    }
-                },
-                error: function(response) {
-                    alert('Gagal mengirim form.');
-                }
-            });
-        });
-    });
-</script>
+{% comment %} {% block kontenKanan %}
 
-<script src="{% static 'assets/js/multi-select-tag.js' %}"></script>
+  <div class="col-lg-4 col-md-6">
+    <div class="card h-100">
+      <div class="card-header pb-0">
+        <h6>Info Lainnya</h6>
+        <p class="text-sm">
+          Info lainnya disini ...
+        </p>
+      </div>
+    </div>
+  </div>  
 
-{% endblock contentApp_utama %}
+{% endblock kontenKanan %} {% endcomment %}
